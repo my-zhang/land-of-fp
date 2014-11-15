@@ -1,4 +1,5 @@
 land-of-lisp
 ============
 
-all practices on various lisp dialects
+All practices on various lisp dialects. The name "land of lisp" is just inspired by the the book "The Land of Lisp". 
+
