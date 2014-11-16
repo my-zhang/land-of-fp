@@ -18,3 +18,11 @@
             (map #(cons (first s) %) 
                  (comb (rest s)))))) 
 
+(defn k-comb [k s] 
+  (if (empty? s) 
+    '(()) 
+    (filter #(= k (count %)) 
+            (concat (k-comb k (rest s)) 
+                    (map #(cons (first s) %) 
+                         (k-comb (dec k) (rest s))))))) 
+
