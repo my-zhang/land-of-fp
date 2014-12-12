@@ -1,5 +1,5 @@
-land-of-lisp
+land-of-fp
 ============
 
-All practices on various lisp dialects. The name "land of lisp" is just inspired by the the book "The Land of Lisp". 
+Practices on various FP languages.
 
