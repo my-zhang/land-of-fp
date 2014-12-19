@@ -16,6 +16,7 @@
         row)))
 
 (defn string-mingling 
+  []
   (let 
     [p (read-line)
      q (read-line)]
