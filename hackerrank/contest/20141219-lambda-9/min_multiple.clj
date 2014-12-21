@@ -8,13 +8,15 @@
 (defn mod-pow
   "Returns the remainder of b raised to the e-th power 
   when divided by m."
-  [b e m]
-  (let [f (fn [a b e]
-            (if (<= e 0)
-              a
-              (let [t (if (= (bit-and e 1) 1) (mod (* a b) m) a)]
-                (recur t (mod (* b b) m) (bit-shift-right e 1)))))]
-    (f 1 b e)))
+  [p e m]
+  (loop [accu 1 
+         a p 
+         b e] 
+    (if (<= b 0) 
+      accu 
+      (if (= (bit-and b 1) 1)
+        (recur (mod (* accu a) m) (mod (* a a) m) (bit-shift-right b 1)) 
+        (recur accu (mod (* a a) m) (bit-shift-right b 1))))))
 
 (defn val-to-vec 
   [n]
@@ -41,7 +43,7 @@
 
 (defn mid 
   [l r] 
-  (quot (+ l r) 2)) 
+  (bit-shift-right (+ l r) 1)) 
 
 (definterface INode 
   (get_left []) 
