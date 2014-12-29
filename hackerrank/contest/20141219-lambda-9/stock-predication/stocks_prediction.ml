@@ -1,33 +1,4 @@
-
-let (|>) v f = f v;;
- 
-let string_of_char_list (ls : char list) : string =
-  let s = String.make (List.length ls) '0' in
-    List.fold_left (fun i c -> s.[i] <- c; i+1) 0 ls;
-    s;;
- 
-let append_string (xs : string list) (ls : char list) : string list =
-  let s = string_of_char_list ls in
-    if String.length s = 0 then xs else (xs @ [s]);;
- 
-let read_words_on_line (sep:char -> bool) (s:string) : string list =
-  let len = String.length s in
-  let rec aux i cs acc =
-    if i = len then
-      append_string acc cs
-    else
-      let c = s.[i] in
-      let cs, acc =
-        if sep c then
-          [], append_string acc cs
-        else
-          (cs @ [c]), acc in
-      aux (i+1) cs acc in
-  aux 0 [] [];;
- 
-let is_space = String.contains " \n\r";; (* apparently they use \r too *)
- 
-let read_ints () = read_line () |> read_words_on_line is_space |> List.map int_of_string;;
+#load "str.cma" 
 
 type interval_tree = 
   | Node of int * int * int * int * interval_tree * interval_tree 
@@ -53,18 +24,6 @@ let rec insert_val tree idx v =
                 left, (insert_val right idx v)) 
 
     | Leaf (l, r, max_v, min_v) -> Leaf (l, r, v, v) 
-
-
-let rec preorder_print (tree : interval_tree) = 
-  match tree with 
-    | Node (l, r, v, u, left, right) -> 
-        Printf.printf "[%d %d] %d %d\n" l r v u;
-        preorder_print left; 
-        preorder_print right; 
-        ()
-    | Leaf (l, r, v, u) -> 
-        Printf.printf "[%d %d] %d %d\n" l r v u;
-        () 
 
 let rec query_segs tree i j = 
   match tree with 
@@ -132,7 +91,8 @@ let do_queries tree n t =
   in 
   let rec f i = 
     if i < t then
-      let q = read_ints () in 
+      let q = List.map int_of_string 
+             (Str.split (Str.regexp " ") (read_line ())) in 
         match q with 
           | idx::m::rest -> 
             (* Printf.printf "query %d %d\n" idx m; *) 
@@ -145,7 +105,8 @@ let do_queries tree n t =
 
 let main = 
   let n = read_int () in 
-  let nums = read_ints() in 
+  let nums = List.map int_of_string 
+             (Str.split (Str.regexp " ") (read_line ())) in 
   let tree = init_tree (build_tree 0 (n-1)) nums in 
   let t = read_int() in 
     do_queries tree n t 
