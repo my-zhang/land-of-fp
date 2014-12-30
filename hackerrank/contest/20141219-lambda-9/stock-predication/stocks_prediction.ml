@@ -1,4 +1,4 @@
-#load "str.cma" 
+open Str
 
 type interval_tree = 
   | Node of int * int * int * int * interval_tree * interval_tree 
