@@ -51,7 +51,7 @@ let rec preorder_print (tree : interval_tree) =
 let rec query_segs tree i j = 
   match tree with 
     | Node (l, r, v, left, right) -> 
-        if i = l && l = r then 
+        if i = l && j = r then 
           [v]
         else if j <= (mid l r) then 
           (query_segs left i j) 
