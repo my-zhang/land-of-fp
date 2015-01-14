@@ -55,21 +55,6 @@ let rec preorder_print (tree : interval_tree) =
         Printf.printf "[%d %d] %d \n" l r v;
         () 
 
-let rec query_segs tree i j = 
-  match tree with 
-    | Node (l, r, v, left, right) -> 
-        if i = l && j = r then 
-          [v]
-        else if j <= (mid l r) then 
-          (query_segs left i j) 
-        else if i > (mid l r) then 
-          (query_segs right i j)
-        else
-          (query_segs left i (mid l r)) @ 
-            (query_segs right ((mid l r) + 1) j) 
-
-    | Leaf (l, r, v) -> [v] 
-
 let rec query tree i j = 
   match tree with 
     | Node (l, r, v, left, right) -> 
